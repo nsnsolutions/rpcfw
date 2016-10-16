@@ -315,17 +315,88 @@ __Constructor__
 
 TODO
 
-### AppFactory
+### appFactory
 
-Create a application constructor bassed on a ServiceConfiguration.
+Create a application constructor bassed on a ServiceConfiguration. This
+constructure also has members for retrieveing data passed into the factory. All
+these values are readonly getters. See members for more details.
 
 #### Members
 
+__constructor__
+
+`var app = appContextFromAppFactory(OPTS)`
+
+Create a new appContext bound by the settings applied to the appFactory.
+
+Args:
+- OPTS:
+ - onStart: A function to execute when the appContext is started.
+ - onRestart: A function to execute when the appContext is restarted.
+ - onConfigUpdate: Optional, a function to execute when a etcd configuration changes.
+ - onShutdown: Optional, a function to execute when appContext is shutdown.
+
+Returns: 
+- [appContext]
+
 __etcd__
+
+A getter that returns the connected etcd instance that was used to load configs
+and other service disovery things. see
+[node-etcd](https://www.npmjs.com/package/node-etcd) for more info.
+
 __isInDebugMode__
+
+A getter that returns the run state. If debug is enabled, the appContext will
+not connect to rmq. Look at the lib/plugins/seneca-rpcfw.js for details.
+
 __serviceDescription__
 
-TODO
+A getter that returns the serviceDescription as loaded by serviceConfiguration.
+
+__logLevel__
+
+A getter that return the logLevel currently applied to the running instance.
+
+__configurations__
+
+A getter that returns the loadded configurations loaded by
+serviceConfiguration.
+
+### appContext
+
+The appContext is used to control the execution state of the current
+service/client. It acts as the glue layer between the frameowk and the user's
+solution. Use appFactory to create a suitable constructor for execution.
+
+#### Members
+
+__constructor__
+
+The construtor should only be called as returned by the appFactory.
+
+__start__
+
+`appContext.start()`
+
+Connects the framework to the rpc bus and installs framework plugins. Once
+complete, calls Restart.
+
+__restart__
+
+`appContext.restart()`
+
+Shutdowns the existing connection to the rpc bus and re-initializes the
+framework. This is very usefull to call if a service wants to reload it's
+configurations. Once complete, calls onRestart.
+
+__shutdown__
+
+`appContext.shutdown()`
+
+Shutdown the existing connection to the rpc bus and dispose the framework
+configuration. Once complete, calls onShutdown. It is the responsability of the
+solution to exit the process.
 
 ## Seneca Decorators
 
@@ -333,9 +404,33 @@ RpcFW Addes decorators to the seneca object that is passed to the app on
 startup and restartup.  These decorators can be called at any time, even within
 your seneca plugins.
 
-### addRpc
+### rpcAdd
+
+`bus.rpcAdd(PATTERN, CALLBACK)`
+
+Expose CALLBACK as a rpc function as PATTERN. See [seneca
+add](http://senecajs.org/api/#add-pattern-spec-handler-this) documentation for
+more detail on pattern.
+
+CALLBACK should be a function that excepts 2 arguments.
+
+`function CALLBACK(MSG, RESP) { ... }`
+
+Params:
+- MSG: The request from seneca wrapped as a verifiabeObject.
+- RESP: A rpcDone object used to respond to the request.
+
 ### rpcClient
+
+`bus.rpcClient({pin: 'role:*'});`
+
+Connect to the rpc bus as a client.
+
 ### rpcServer
+
+`bus.rpcServer({pin: 'role:YourService'});`
+
+Connect to the rpc bus as a server.
 
 ---
 
