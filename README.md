@@ -1,6 +1,172 @@
-# RpcFw
+# RpcFW
 
 Remote Procedure Call Framework built on senecajs, rabbitmq, and etcd.
+
+## Types
+
+RpcFW uses the parasitic inheritance pattern. Keep in mind that this approach
+can mask members on objects if you use a name that is already used as a member
+name in the subclass. Please note the member names in each section.
+
+### VerifiableObject
+
+It is a natural side effect of RPC that we cannot trust endpoints to send our
+services properly formatted data. We have no compiler or pre-processing to
+validate these signatures against invocation expressions. 
+
+Because of this RpcFW provides the `verifiableObject` object provides methods
+to simplify validation. It is used for incoming message requests as well as
+configuration loading. It is also exposed if you would like to make further use
+of it for return data from other services.
+
+#### Members
+
+_Constructor_
+
+`verifiableObject(OBJ)`
+
+Create new linked object from OBJ and extend it with [Members].
+
+_assertMember_
+
+Throw an error if the field or path does not exist and is not a specific type (optional).
+
+`o.assertMember(PATH, TYPE)`
+
+args: 
+
+- PATH: A path that represents where in the context to look. Example: "item1.item2"
+- TYPE: A javascript Type method. One of: String, Number, Boolean, Object, Array (Optional)
+
+_ensureExists_
+
+Set a default value on the field or path if no value is set.                                     |
+
+`o.ensureExists(PATH, VALUE)`
+
+args: 
+
+- PATH: A path that represents where in the context to set. Example: "item1.item2"
+- VALUE: The value to set if the path has no value.
+
+_get_
+
+Get the value stored in the field or path on the current context.                                |
+
+`o.get(PATH, VALUE)`
+
+args: 
+
+- PATH: A path that represents where in the context to get. Example: "item1.item2"
+- VALUE: The value to get if the path has no value. (optional)
+
+_set_
+
+Set the field or path on the current context.                                                    |
+
+`o.set(PATH, VALUE)`
+
+args: 
+
+- PATH: A path that represents where in the context to set. Example: "item1.item2"
+- VALUE: The value to set on the path. This will over write exsting values.
+
+_has_
+
+Check for the existance of a field or path of a specific type (optional) on the current context. |
+
+`o.has(PATH, TYPE)`
+
+args:
+
+- PATH: A path that represents where in the context to check. Example: "item1.item2"
+- TYPE: A javascript Type method. One of: String, Number, Boolean, Object, Array (Optional)
+
+_raw_
+
+`o.raw`
+
+Property that returns the raw, unlinked object used to initialize the verifiableObject           |
+
+#### Examples
+
+```javascript
+const rpcfw = require('rpcfw');
+
+var o = rpcfw.verifiableObject({
+    item1: "Item 1",
+    item2: 2,
+    item3: { item4: true }
+});
+
+o.assertMember("item3.item4") // pases
+o.assertMember("item3.item4", Boolean) // pases
+o.assertMember("item3.item4", Number) // Throws UnexpectedTypeError
+o.assertMember("no.exist", Number) // Throws MemberNotFoundError
+
+o.ensureExists("item0", "Will create and set item0 field");
+o.ensureExists("item1", "Will do nothing because item1 has a value.");
+
+o.has("item3.item4") // returns True
+o.has("item3.item4", Boolean) // returns true
+o.has("item3.item4", Number) // returns false
+
+o.get("item3.item4") // returns the value stored in o.item3.item4. (true)
+o.get("no.exist", "defaultValue") // returns "defaultValue"
+
+o.set("item3.new", "will create item3.new")
+o.set("item3.item4", "Will set a new value on item3.item4")
+
+```
+
+### FixedConfig
+
+Fixed config is a constructor to turn a configuration collection entry into a
+verifiableObject. This object has no specific members other then those defined
+in verifiableObject.
+
+#### Members
+
+_Constructor_
+
+`fixedConfig(ENTRY)`
+
+Create new linked object from ENTRY.value and extend it with [Members].
+
+args:
+- ENTRY: An object defining the name and value of the static config.
+ - name: The name of the config (used in error assertion).
+ - value: the static object with the values.
+
+### EtcdConfig
+
+Etcd config reads a etcd2 node and maps it to a verifiableObject. It can
+optionaly watch for changes and invoke a "onChanged" callback. etcdConfig has
+no special members other then those defined in verifiableObject.
+
+#### Members
+
+_Constructor_
+
+`etcdObject(ENTRY, OPTS)`
+
+Create a new linked object from the etcd2 node identified in ENTRY.key and
+extend it as a verifiableObject. Optionally, set up a watcher that will update
+the resulting verifiableObject and execute the given callback.
+
+Args:
+- ENTRY: An object defining a name and etcd2 key to load.
+ - name: A user friendly name (used in error assertion).
+ - key: The etcd2 key to load.
+ - watch: Optional, Watch etcd2 for changes. Default: false.
+ - recursive: Optional, Load the etcd2 node recursivly. Default: true.
+- OPTS: Additional details, some required.
+ - etcd: A reference to a connected node-etcd client object.
+ - onChange: A callback that will be executed when the etcd2 node is change (if watch: true )
+
+
+---
+
 
 ## Brainstorm on CLI
 
