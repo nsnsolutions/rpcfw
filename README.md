@@ -21,13 +21,13 @@ of it for return data from other services.
 
 #### Members
 
-_Constructor_
+__Constructor__
 
 `verifiableObject(OBJ)`
 
 Create new linked object from OBJ and extend it with [Members].
 
-_assertMember_
+__assertMember__
 
 Throw an error if the field or path does not exist and is not a specific type (optional).
 
@@ -38,7 +38,7 @@ args:
 - PATH: A path that represents where in the context to look. Example: "item1.item2"
 - TYPE: A javascript Type method. One of: String, Number, Boolean, Object, Array (Optional)
 
-_ensureExists_
+__ensureExists__
 
 Set a default value on the field or path if no value is set.                                     |
 
@@ -49,7 +49,7 @@ args:
 - PATH: A path that represents where in the context to set. Example: "item1.item2"
 - VALUE: The value to set if the path has no value.
 
-_get_
+__get__
 
 Get the value stored in the field or path on the current context.                                |
 
@@ -60,7 +60,7 @@ args:
 - PATH: A path that represents where in the context to get. Example: "item1.item2"
 - VALUE: The value to get if the path has no value. (optional)
 
-_set_
+__set__
 
 Set the field or path on the current context.                                                    |
 
@@ -71,7 +71,7 @@ args:
 - PATH: A path that represents where in the context to set. Example: "item1.item2"
 - VALUE: The value to set on the path. This will over write exsting values.
 
-_has_
+__has__
 
 Check for the existance of a field or path of a specific type (optional) on the current context. |
 
@@ -82,7 +82,7 @@ args:
 - PATH: A path that represents where in the context to check. Example: "item1.item2"
 - TYPE: A javascript Type method. One of: String, Number, Boolean, Object, Array (Optional)
 
-_raw_
+__raw__
 
 `o.raw`
 
@@ -127,7 +127,7 @@ in verifiableObject.
 
 #### Members
 
-_Constructor_
+__Constructor__
 
 `fixedConfig(ENTRY)`
 
@@ -146,7 +146,7 @@ no special members other then those defined in verifiableObject.
 
 #### Members
 
-_Constructor_
+__Constructor__
 
 `etcdObject(ENTRY, OPTS)`
 
