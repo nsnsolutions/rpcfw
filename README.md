@@ -198,7 +198,13 @@ __version__
 
 `var n = o.version`
 
-The version of the service.
+The version of the service split into a map.
+
+Returns:
+- major: The major version
+- minor: The minor version
+- patch: The patch version
+- toString: The reassembled version as a string. Ie: 1.0.0
 
 __toString__
 

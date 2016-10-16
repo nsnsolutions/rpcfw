@@ -3,7 +3,7 @@
 const assert = require('assert');
 const lib = require('../lib');
 
-describe.only('errors', function() {
+describe('errors', function() {
 
     describe('ERRINT_BAD_REQUEST', function() {
         it('should have ERRINT_BAD_REQUEST', function() {
