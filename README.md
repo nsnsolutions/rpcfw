@@ -1,3 +1,5 @@
+TODO: Fix the onChange concept for etcdConfig
+
 # RpcFW
 
 Remote Procedure Call Framework built on senecajs, rabbitmq, and etcd.
@@ -293,7 +295,7 @@ Builtin codes start at 0xFFFF0000 and go up from there.
 | Label                    | Value      | Description                                                                                                             |
 | ------------------------ | ---------- | ----------------------------------------------------------------------------------------------------------------------- |
 | `ERRINT_BAD_REQUEST`     | 0xFFFF0001 | Should be returned by service if there is incorrect or insufficient information in the request.                         |
-| `ERRINT_UNAUTHORIZED`    | 0xFFFF0002 | Should be returned by service if the current user context does not have the authority to perform the requested action.  |
+| `ERRINT_NOT_AUTHORIZED`    | 0xFFFF0002 | Should be returned by service if the current user context does not have the authority to perform the requested action.  |
 | `ERRINT_FORBIDDEN`       | 0xFFFF0003 | Should be returned by service if the current user context is unknown but required.                                      |
 | `ERRINT_NOT_IMPLEMENTED` | 0xFFFF0004 | Should be returned by service if the requested method or action is not implemented.                                     |
 | `ERRINT_NOT_AVAILABLE`   | 0xFFFF0005 | Should be returned by service if the request cannot be completed due to missing or non responding dependent service.    |
@@ -531,9 +533,9 @@ function(done) {
             error: { code: ERRINT_BAD_REQUEST, message: message }
         }),
 
-        unauthorized: (message) => done(null, {
+        notAuthorized: (message) => done(null, {
             hasError: true,
-            error: { code: ERRINT_UNAUTHORIZED, message: message }
+            error: { code: ERRINT_NOT_AUTHORIZED, message: message }
         }),
 
         forbidden: (message) => done(null, {
@@ -591,7 +593,7 @@ errors start at 0xFFFF0000. Application error codes should be less then
 
 - `ERRINT                 = 0xFFFF0000`
 - `ERRINT_BAD_REQUEST     = ERRINT+1`
-- `ERRINT_UNAUTHORIZED    = ERRINT+2`
+- `ERRINT_NOT_AUTHORIZED    = ERRINT+2`
 - `ERRINT_FORBIDDEN       = ERRINT+3`
 - `ERRINT_NOT_IMPLEMENTED = ERRINT+4`
 - `ERRINT_NOT_AVAILABLE   = ERRINT+5`
@@ -618,7 +620,7 @@ The error module exports the following map.
 {
     ERRINT:                 0xFFFF0000,
     ERRINT_BAD_REQUEST:     ERRINT+1,
-    ERRINT_UNAUTHORIZED:    ERRINT+2,
+    ERRINT_NOT_AUTHORIZED:    ERRINT+2,
     ERRINT_FORBIDDEN:       ERRINT+3,
     ERRINT_NOT_IMPLEMENTED: ERRINT+4,
     ERRINT_NOT_AVAILABLE:   ERRINT+5,

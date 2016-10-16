@@ -23,20 +23,20 @@ describe('errors', function() {
         });
     });
 
-    describe('ERRINT_UNAUTHORIZED', function() {
-        it('should have ERRINT_UNAUTHORIZED', function() {
-            assert.equal(0xFFFF0000 + 2, lib.errors.ERRINT_UNAUTHORIZED);
+    describe('ERRINT_NOT_AUTHORIZED', function() {
+        it('should have ERRINT_NOT_AUTHORIZED', function() {
+            assert.equal(0xFFFF0000 + 2, lib.errors.ERRINT_NOT_AUTHORIZED);
         });
 
-        it('should find ERRINT_UNAUTHORIZED', function() {
-            assert.equal(lib.errors.lookup(0xFFFF0000 + 2), "ERRINT_UNAUTHORIZED");
+        it('should find ERRINT_NOT_AUTHORIZED', function() {
+            assert.equal(lib.errors.lookup(0xFFFF0000 + 2), "ERRINT_NOT_AUTHORIZED");
         });
 
-        it('should recognize ERRINT_UNAUTHORIZED as a builtin error.', function() {
+        it('should recognize ERRINT_NOT_AUTHORIZED as a builtin error.', function() {
             assert(lib.errors.isBuiltin(0xFFFF0000 + 2));
         });
 
-        it('should not recognize ERRINT_UNAUTHORIZED - 0xFFFF0000 as a builtin error.', function() {
+        it('should not recognize ERRINT_NOT_AUTHORIZED - 0xFFFF0000 as a builtin error.', function() {
             assert(!lib.errors.isBuiltin(2));
         });
     });

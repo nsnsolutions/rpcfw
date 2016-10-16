@@ -4,8 +4,11 @@ const assert = require('assert');
 const fs = require('fs');
 const temp = require('temp');
 const lib = require('../lib');
+const Etcd = require('./mock_etcd');
 
 describe('serviceConfiguration', function() {
+
+    var etcd = new Etcd();
 
     describe('#constructor(obj)', function() {
         var v = lib.serviceConfiguration({
@@ -16,13 +19,13 @@ describe('serviceConfiguration', function() {
             discoveryUri: "etcd-discovery.local",
             configurations: [
                 { name: "test1", value: { item1: "ITEM 1" } },
-                { name: "test2", value: { item2: "ITEM 2" } },
+                { name: "test2", key: "/tests/rpcfw/ut" },
             ],
             container: {
                 registry: "abc123",
                 image: "xyz789"
             }
-        });
+        }, { etcd: etcd });
 
         it('should have serviceDescription', function() {
             assert(v.serviceDescription.isValid());
@@ -34,7 +37,7 @@ describe('serviceConfiguration', function() {
 
         it('should have configurations', function() {
             assert.equal(v.configurations.test1.item1, "ITEM 1");
-            assert.equal(v.configurations.test2.item2, "ITEM 2");
+            assert.equal(v.configurations.test2.item3.item1, "ITEM3.1");
         });
     });
 
