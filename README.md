@@ -305,6 +305,37 @@ Builtin codes start at 0xFFFF0000 and go up from there.
 | `ERRINT_NOT_AVAILABLE`   | 0xFFFF0005 | Should be returned by service if the request cannot be completed due to missing or non responding dependent service.    |
 | `ERRINT_INTERNAl_ERROR`  | 0xFFFF0006 | Should be returned by service for un-handled errors.                                                                    |
 
+### ServiceConfiguration
+
+Object holding all the settings from the config file.
+
+#### Members
+
+__Constructor__
+
+TODO
+
+### AppFactory
+
+Create a application constructor bassed on a ServiceConfiguration.
+
+#### Members
+
+__etcd__
+__isInDebugMode__
+__serviceDescription__
+
+TODO
+
+## Seneca Decorators
+
+RpcFW Addes decorators to the seneca object that is passed to the app on
+startup and restartup.  These decorators can be called at any time, even within
+your seneca plugins.
+
+### addRpc
+### rpcClient
+### rpcServer
 
 ---
 
@@ -326,39 +357,48 @@ This will load Service.yaml and do the following things:
 Installer might look like this:
 
 ```nodejs
-const Express = require('express');
 
-var webApp = null,
-    webServer = null;
+module.exports = function(app) {
 
-module.exports = function installer(rc) {
+    /* Do setup things. */
 
-    /*
-     * Initialize service.
-     * 
-     * This method will setup the service and install the plugins on the 
-     * current service context. The method will be called each time the
-     * service is started or restarted. 
-     *
-     * Arguments:
-     *   rc: The count of times the service has been started or restarted.
-     *
-     * Context:
-     *   Seneca object holding RpcFw decorators. See documentation.
-     */
+    app.initialize({
 
-    if(webServer) webServer.close()
-    webApp = Express();
+        /* Called when etcdConfig sees a change. */
+        onConfigUpdate: onUpdate
 
-    this.use('myPlugin');
-    this.ready(() => {
-        webServer = webApp.listen()
-    });
+        /* Called the first time the service is started */
+        onStart: install,
 
-    this.connectClient(['role:*']);
-    this.connectServer(['role:MyService']);
+        /* Called each time the service is restarted by seneca.restart() */
+        onRestart: reInstall
 
-};
+    })
+
+    app.start();
+
+    // ------------------------------------------------------------------------
+
+    function onUpdate(name, conf) {
+        /* A change was made on one of the etcd configs. */ 
+        if(name === 'someConfigName')
+            this.restart();
+    }
+
+    function install(bus) {
+        /* install/reinstall services, start client/server */ 
+        this.ready( () => { /** access to all seneca things */ } )
+        this.use('myPlugin');
+
+        this.rpcClient();
+        this.rpcServer();
+    }
+
+    function reInstall() {
+        /* Do some app level restart like close express or whatever */
+        install.call(this);
+    }
+}
 ```
 
 Basicly, the config is loaded and creates the following objects:

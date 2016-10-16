@@ -16,7 +16,6 @@ describe('serviceConfiguration', function() {
             version: "1.2.3",
             description: "This is a service",
             main: `${__dirname}/index.js`,
-            discoveryUri: "etcd-discovery.local",
             configurations: [
                 { name: "test1", value: { item1: "ITEM 1" } },
                 { name: "test2", key: "/tests/rpcfw/ut" },
@@ -48,7 +47,6 @@ describe('serviceConfiguration', function() {
                 version: "1.2.3",
                 description: "This is a service",
                 main: `${__dirname}/index.js`,
-                discoveryUri: "etcd-discovery.local",
                 configurations: [
                     { name: "test1", value: { item1: "ITEM 1" } },
                     { name: "test2", value: { item2: "ITEM 2" } },
@@ -75,7 +73,6 @@ describe('serviceConfiguration', function() {
                 version: "1.2.3",
                 description: "This is a service",
                 main: `${__dirname}/index.js`,
-                discoveryUri: "etcd-discovery.local",
                 configurations: [
                     { name: "test1", value: { item1: "ITEM 1" } },
                     { name: "test2", value: { item2: "ITEM 2" } },
@@ -93,7 +90,6 @@ describe('serviceConfiguration', function() {
                 name: "MyService",
                 description: "This is a service",
                 main: `${__dirname}/index.js`,
-                discoveryUri: "etcd-discovery.local",
                 configurations: [
                     { name: "test1", value: { item1: "ITEM 1" } },
                     { name: "test2", value: { item2: "ITEM 2" } },
@@ -111,7 +107,6 @@ describe('serviceConfiguration', function() {
                 name: "MyService",
                 version: "1.2.3",
                 description: "This is a service",
-                discoveryUri: "etcd-discovery.local",
                 configurations: [
                     { name: "test1", value: { item1: "ITEM 1" } },
                     { name: "test2", value: { item2: "ITEM 2" } },
@@ -136,8 +131,6 @@ describe('serviceConfiguration', function() {
             "description: This is an example service description file.",
             "",
             "main: index.js",
-            "",
-            "discoveryUri: http://etcd.discovery.local:2379",
             "",
             "configurations:",
             "  - name: test1",

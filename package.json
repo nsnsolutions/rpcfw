@@ -19,7 +19,9 @@
   "dependencies": {
     "js-yaml": "^3.6.1",
     "node-etcd": "^5.0.3",
-    "object-path": "^0.11.2"
+    "object-path": "^0.11.2",
+    "seneca": "^3.2.1",
+    "seneca-amqp-transport": "^2.0.0"
   },
   "devDependencies": {
     "mocha": "^3.1.2",
