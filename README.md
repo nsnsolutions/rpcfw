@@ -256,6 +256,42 @@ __isValid__
 
 Check the object for a valid image name.
 
+### Errors
+
+A singleton that can be used to lookup and produce error codes.
+
+#### Members
+
+__lookup__
+
+`o.lookup(CODE)`
+
+Lookup the label of an error by a code.
+
+args:
+- code: an integer representing a error code. If not found, response is undefined.
+
+__isBuiltin__
+
+`o.isBuiltin(CODE)`
+
+Lookup the label of an error by a code.
+
+args:
+- code: an integer representing a error code. If not found, response is undefined.
+
+__Codes__
+
+Builtin codes start at 0xFFFF0000 and go up from there.
+
+| Label                    | Value      | Description                                                                                                             |
+| ------------------------ | ---------- | ----------------------------------------------------------------------------------------------------------------------- |
+| `ERRINT_BAD_REQUEST`     | 0xFFFF0001 | Should be returned by service if there is incorrect or insufficient information in the request.                         |
+| `ERRINT_UNAUTHORIZED`    | 0xFFFF0002 | Should be returned by service if the current user context does not have the authority to perform the requested action.  |
+| `ERRINT_FORBIDDEN`       | 0xFFFF0003 | Should be returned by service if the current user context is unknown but required.                                      |
+| `ERRINT_NOT_IMPLEMENTED` | 0xFFFF0004 | Should be returned by service if the requested method or action is not implemented.                                     |
+| `ERRINT_NOT_AVAILABLE`   | 0xFFFF0005 | Should be returned by service if the request cannot be completed due to missing or non responding dependent service.    |
+| `ERRINT_INTERNAl_ERROR`  | 0xFFFF0006 | Should be returned by service for un-handled errors.                                                                    |
 
 
 ---
