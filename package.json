@@ -6,6 +6,9 @@
   "scripts": {
     "test": "./node_modules/.bin/mocha"
   },
+  "bin": {
+    "rpcfw": "bin/rpcfw.js"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/en0/rpcfw.git"
@@ -17,6 +20,7 @@
   },
   "homepage": "https://github.com/en0/rpcfw#readme",
   "dependencies": {
+    "argparse": "^1.0.9",
     "js-yaml": "^3.6.1",
     "node-etcd": "^5.0.3",
     "object-path": "^0.11.2",
