@@ -164,8 +164,103 @@ Args:
  - etcd: A reference to a connected node-etcd client object.
  - onChange: A callback that will be executed when the etcd2 node is change (if watch: true )
 
+### ServiceDescription
+
+A object containing some metadata about the service.
+
+#### Members
+
+__Constructor__
+
+`serviceDescription(ENTRY)`
+
+Create a new service description object with the given metadata.
+
+args:
+- ENTRY: 
+ - name: The name of the service.
+ - description: A description of the service.
+ - version: A symatic style version number. Example: 1.0.0 (note the absense of 'v')
+
+__name__
+
+`var n = o.name`
+
+Name is a property that represents the name of the service.
+
+__description__
+
+`var n = o.description`
+
+The description of the service.
+
+__version__
+
+`var n = o.version`
+
+The version of the service.
+
+__toString__
+
+`var n = o.toString()`
+
+Create a friendly name for the service. "Name v1.0.1"
+
+__isValid__
+
+`if(o.isValid()) {}`
+
+Check the object for a valid name and version.
+
+### ContainerDetails
+
+An object holding the details about where the docker image is associated.
+
+#### Members
+
+__Constructor__
+
+`containerDetails(ENTRY)`
+
+Create a new containerDetails object from the given ENTRY.
+
+args:
+- ENTRY: 
+ - registry: Optional, a docker registry uri.
+ - image: The name of the image to assocaite this service with.
+
+__registry__
+
+`var n = o.registry`
+
+A docker registry URI.
+
+__image__
+
+`var n = o.image`
+
+The name of the image to assocaite this service with.
+
+__toString__
+
+`var n = o.toString(TAG)`
+
+Returns the name of the image as docker would see it. 
+
+args:
+- TAG: Optional, Produce the output with a given tag.
+
+__isValid__
+
+`if(o.isValid()) {}`
+
+Check the object for a valid image name.
+
+
 
 ---
+
+
 
 
 ## Brainstorm on CLI

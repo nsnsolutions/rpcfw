@@ -32,101 +32,101 @@ describe('VerifiableObject', function() {
 
     });
 
-    describe('.ensureMember(path, type)', function() {
+    describe('.has(path, type)', function() {
         it('should ensure "item1" exists.', function() {
-            assert(v.ensureMember("item1"));
+            assert(v.has("item1"));
         });
 
         it('should ensure "item1" exists as String.', function() {
-            assert(v.ensureMember("item1", String));
+            assert(v.has("item1", String));
         });
 
         it('should ensure "item 2" exists String.', function() {
-            assert(v.ensureMember("item 2", String));
+            assert(v.has("item 2", String));
         });
 
         it('should ensure "item3" does not exist.', function() {
-            assert(v.ensureMember("item3", String) === false);
+            assert(v.has("item3", String) === false);
         });
 
         it('should ensure "item4" does not exist as String.', function() {
-            assert(v.ensureMember("item4", String) === false);
+            assert(v.has("item4", String) === false);
         });
 
         it('should ensure "item4" exists as Number.', function() {
-            assert(v.ensureMember("item4", Number));
+            assert(v.has("item4", Number));
         });
 
         it('should ensure "item5" does not exist as String.', function() {
-            assert(v.ensureMember("item5", String) === false);
+            assert(v.has("item5", String) === false);
         });
 
         it('should ensure "item5" does not exist as Number.', function() {
-            assert(v.ensureMember("item5", Number) === false);
+            assert(v.has("item5", Number) === false);
         });
 
         it('should ensure "item5" exists as Boolean.', function() {
-            assert(v.ensureMember("item5", Boolean));
+            assert(v.has("item5", Boolean));
         });
 
         it('should ensure "item6" does not exist as String.', function() {
-            assert(v.ensureMember("item6", String) === false);
+            assert(v.has("item6", String) === false);
         });
 
         it('should ensure "item6" does not exist as Number.', function() {
-            assert(v.ensureMember("item6", Number) === false);
+            assert(v.has("item6", Number) === false);
         });
 
         it('should ensure "item6" exists as Boolean.', function() {
-            assert(v.ensureMember("item6", Boolean));
+            assert(v.has("item6", Boolean));
         });
 
         it('should ensure "item7" does not exist as String.', function() {
-            assert(v.ensureMember("item7", String) === false);
+            assert(v.has("item7", String) === false);
         });
 
         it('should ensure "item7" does not exist as Number.', function() {
-            assert(v.ensureMember("item7", Number) === false);
+            assert(v.has("item7", Number) === false);
         });
 
         it('should ensure "item7" does not exist as Boolean.', function() {
-            assert(v.ensureMember("item7", Boolean) === false);
+            assert(v.has("item7", Boolean) === false);
         });
 
         it('should ensure "item7" exists as Array.', function() {
-            assert(v.ensureMember("item7", Array));
+            assert(v.has("item7", Array));
         });
 
         it('should ensure "item8" does not exist as String.', function() {
-            assert(v.ensureMember("item8", String) === false);
+            assert(v.has("item8", String) === false);
         });
 
         it('should ensure "item8" does not exist as Number.', function() {
-            assert(v.ensureMember("item8", Number) === false);
+            assert(v.has("item8", Number) === false);
         });
 
         it('should ensure "item8" does not exist as Boolean.', function() {
-            assert(v.ensureMember("item8", Boolean) === false);
+            assert(v.has("item8", Boolean) === false);
         });
 
         it('should ensure "item8" does not exist as Array.', function() {
-            assert(v.ensureMember("item8", Array) === false);
+            assert(v.has("item8", Array) === false);
         });
 
         it('should ensure "item8" exists as Object.', function() {
-            assert(v.ensureMember("item8", Object));
+            assert(v.has("item8", Object));
         });
 
         it('should ensure "item8.item1" exists as String.', function() {
-            assert(v.ensureMember("item8.item1", String));
+            assert(v.has("item8.item1", String));
         });
 
         it('should ensure "item 9" exists as Object.', function() {
-            assert(v.ensureMember("item 9", Object));
+            assert(v.has("item 9", Object));
         });
 
         it('should ensure "item 9.item1" exists as String.', function() {
-            assert(v.ensureMember("item 9.item1", String));
+            assert(v.has("item 9.item1", String));
         });
     });
 
