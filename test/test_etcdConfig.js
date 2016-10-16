@@ -13,7 +13,7 @@ describe('etcdConfig', function test_etcdConfig() {
             name: "Test",
             key: "/tests/rpcfw/ut",
             watch: false
-        }, { etcd: etcd });
+        }, etcd);
 
         it('should contain "item1"', function() {
             assert.equal(v.item1, "ITEM1");
@@ -30,9 +30,7 @@ describe('etcdConfig', function test_etcdConfig() {
             name: "Test",
             key: "/tests/rpcfw/ut",
             watch: true
-        }, { etcd: etcd, onChange: function() {
-            assert(false);
-        }});
+        }, etcd);
 
         it('should contain "item1"', function() {
             assert.equal(v.item1, "ITEM1");

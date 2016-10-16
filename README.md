@@ -1,5 +1,3 @@
-TODO: Fix the onChange concept for etcdConfig
-
 # RpcFW
 
 Remote Procedure Call Framework built on senecajs, rabbitmq, and etcd.
@@ -143,14 +141,13 @@ args:
 ### EtcdConfig
 
 Etcd config reads a etcd2 node and maps it to a verifiableObject. It can
-optionaly watch for changes and invoke a "onChanged" callback. etcdConfig has
-no special members other then those defined in verifiableObject.
+optionaly watch for changes and invoke a _onUpdate_ callback. 
 
 #### Members
 
 __Constructor__
 
-`etcdObject(ENTRY, OPTS)`
+`etcdConfig(ENTRY, ETCD)`
 
 Create a new linked object from the etcd2 node identified in ENTRY.key and
 extend it as a verifiableObject. Optionally, set up a watcher that will update
@@ -162,9 +159,16 @@ Args:
  - key: The etcd2 key to load.
  - watch: Optional, Watch etcd2 for changes. Default: false.
  - recursive: Optional, Load the etcd2 node recursivly. Default: true.
-- OPTS: Additional details, some required.
- - etcd: A reference to a connected node-etcd client object.
- - onChange: A callback that will be executed when the etcd2 node is change (if watch: true )
+ - debounce: The ammount of time to wait between seeing a change in etcd and invoking the onUpdate callback.
+- ETCD: A reference to a connected node-etcd client object.
+
+__onUpdate__
+
+`o.onUpdate = function(CONF) { ... }`
+
+The onUpdate callback is invoked each time any of the watched etecd nodes for
+this config change. The invoked function will be given a refrence to the
+etcdConfig object.
 
 ### ServiceDescription
 
