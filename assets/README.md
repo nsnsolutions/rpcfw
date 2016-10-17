@@ -4,19 +4,4 @@
 
 ## Quick Start
 
-- Install packages
-- Optionally install nodemon for automatic restarting.
-- Run as debug.
-
-```bash
-npm install
-npm install -g nodemon
-nodemon --exec "rpcfw run --discovery-uri etcd.local:2379 --debug Service.yml"
-```
-
-If you do not want to use nodemon:
-
-```bash
-npm install
-rpcfw run --discovery-uri etcd.local:2379 --debug Service.yml
-```
+Run `npm start -- --debug` and open [localhost](http://localhost:10101/act?role=hello.Pub&cmd=greet.v1)

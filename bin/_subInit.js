@@ -47,11 +47,16 @@ module.exports = function Init(opts) {
         templateLoader = null,
         templateEngine = null,
         outputs = [
+            // Metadata
             { name: "Dockerfile",   target: path.join(target_dir, "Dockerfile")     },
             { name: "README.md",    target: path.join(target_dir, "README.md")      },
             { name: "Service.yml",  target: path.join(target_dir, "Service.yml")    },
-            { name: "src/main.js",  target: path.join(target_dir, 'src', "main.js") },
-            { name: "package.json", target: path.join(target_dir, "package.json")   }
+            { name: "package.json", target: path.join(target_dir, "package.json")   },
+
+            // Source code
+            { name: "src/main.js",            target: path.join(target_dir, 'src', "main.js") },
+            { name: "src/services/index.js",  target: path.join(target_dir, 'src', 'services', "index.js") },
+            { name: "src/services/hello.js",  target: path.join(target_dir, 'src', 'services', "hello.js") },
         ];
 
 
