@@ -18,6 +18,60 @@ Go to your new project directory and launch the new service.
 
 You are ready to start building your service.
 
+## Application Entrypoing
+
+RpcFW will load initialize the environment accourding to the configuration
+specified in the Service.yml. Once that environment is ready, it will call your
+application entry point. RpcFW expects a function that accepts the AppContext
+constructor. This can be used to bootstrap your service or client.
+
+The appContext constructor already has the service yaml settings applied. It
+needs to be bound to your plugins and started. The constructor should be
+executed as follows.
+
+`var app = appContext({ ... })`
+
+Params:
+- onConfigUpdate: Called each time a etcd config change is fired. `function(name, conf)`
+- onStart: Called each time app.start is executed. `function(bus, confs)`
+- onRestart: Called each time app.restart is executed. `function(bus, confs)`
+- onShutdown: Called each time app.Shutdown is executed. `function(bus, confs)`
+
+This constructor returns a appContext object that can be used to start your
+service. That appContext has the following methods.
+
+- start(): Will start the framework and call onStart callback.
+- restart(): Will shutdown the framework, restart it and call onRestart callback.
+- shutdown(): Will shutdown the framework and call the onShutdown callback.
+
+Example:
+
+This example will expose a two method calls. _hello_ that simply response with
+"Hello". And _exit_ that will shutdown the server.  It will also restart the
+server if any configurations change.
+
+```javascript
+module.exports = function(AppContext) {
+    var app = AppContext({
+        onStart: (b, c) => install(b,c),
+        onRestart: (b, c) => install(b,c),
+        onShutdown: () => process.exit(0),
+        onConfigUpdate: () => app.restart()
+    })
+
+    .start();
+
+    function install(bus, config) {
+        bus.rpcAdd('role:MyService,cmd:hello', (m, d) => d.success("Hello"));
+        bus.rpcAdd('role:MyService,cmd:exit', (m, d) => {
+            d.success("ok");
+            app.shutdown();
+        });
+        bus.rpcServer({ pin: "role:MyService" });
+    }
+};
+```
+
 ## Service.yml
 
 The service yml holds metadata about the service. It tells the framework what
