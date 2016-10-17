@@ -44,7 +44,7 @@ service. That appContext has the following methods.
 - restart(): Will shutdown the framework, restart it and call onRestart callback.
 - shutdown(): Will shutdown the framework and call the onShutdown callback.
 
-Example:
+### Example:
 
 This example will expose a two method calls. _hello_ that simply response with
 "Hello". And _exit_ that will shutdown the server.  It will also restart the
@@ -157,6 +157,31 @@ The FixedConfig entry will load the liternal value as the config.
 
 - name: The field name to attach the config to after load.
 - value: A json object containing the literal configuration to attach.
+
+### Examples
+
+```yaml
+name: MyService
+version: 1.0.0
+description: My Cool Service
+
+main: src/main.js
+
+configurations:
+
+  - name: MyService
+    key: /config/services/MyService
+    watch: true
+
+  - name: LocalConfig
+    Value:
+        foo: bar
+        baz: qux
+
+container:
+  registry: abc123.ecr.us-west-1.amazonaws.com
+  image: ecr.registry.name
+```
 
 # Internal API Documentation
 
