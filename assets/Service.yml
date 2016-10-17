@@ -1,0 +1,31 @@
+# Here be a service
+---
+name: {{ SERVICE_NAME }}
+version: 1.0.0
+description: {{ SERVICE_DESCRIPTION }}
+
+main: src/main.js
+
+configurations:
+
+  # You can specify etcd nodes here. The key must exist or the service will fail
+  # to start. You can optionally tell the service to raise a onConfigChanged
+  # event with the watch argument.
+  #
+  # You can also setup a static config by providing value and omitting the
+  # etcd key.
+  #
+  # ETCD Example:
+  # - name: {{ SERVICE_NAME }}
+  #   key: /config/services/{{ SERVICE_NAME }}
+  #   watch: true
+  # 
+  # STATIC Example:
+  # - name: LocalConfig
+  #   Value:
+  #       foo: bar
+  #       baz: qux
+
+container:
+  registry: {{ DOCKER_REGISTRY }}
+  image: {{ DOCKER_IMAGE }}

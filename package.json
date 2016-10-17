@@ -1,0 +1,38 @@
+{
+  "name": "rpcfw",
+  "version": "0.1.0",
+  "description": "Remote Procedure Call Framework built on senecajs, rabbitmq, and etcd.",
+  "main": "./lib/index.js",
+  "scripts": {
+    "test": "./node_modules/.bin/mocha"
+  },
+  "bin": {
+    "rpcfw": "bin/rpcfw.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/en0/rpcfw.git"
+  },
+  "author": "Ian Laird <ilaird@velma.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/en0/rpcfw/issues"
+  },
+  "homepage": "https://github.com/en0/rpcfw#readme",
+  "dependencies": {
+    "argparse": "^1.0.9",
+    "js-yaml": "^3.6.1",
+    "node-etcd": "^5.0.3",
+    "object-path": "^0.11.2",
+    "seneca": "^3.2.1",
+    "seneca-amqp-transport": "^2.0.0"
+  },
+  "devDependencies": {
+    "async": "^2.1.2",
+    "aws-sdk": "^2.6.9",
+    "mocha": "^3.1.2",
+    "nunjucks": "^2.5.2",
+    "prompt": "^1.0.0",
+    "temp": "^0.8.3"
+  }
+}

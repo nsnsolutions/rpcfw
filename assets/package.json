@@ -1,0 +1,11 @@
+{
+  "dependencies": {
+    "rpcfw": "git://github.com/nsnsolutions/rpcfw.git#{{ RPCLIB_VERSION }}"
+  },
+  "devDependencies": {
+    "async": "^2.1.2",
+    "aws-sdk": "^2.6.4",
+    "nunjucks": "^2.5.2",
+    "prompt": "^1.0.0"
+  }
+}
