@@ -127,7 +127,7 @@ function getOpts() {
     );
 
     initAp.addArgument(
-        [ "working-dir" ],
+        [ "dir" ],
         {
             help: "The path to create the new project in.",
             defaultValue: "./"
