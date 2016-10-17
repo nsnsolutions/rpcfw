@@ -6,6 +6,7 @@ RUN mkdir -p /usr/src/app/src
 WORKDIR /usr/src/app
 
 COPY ./package.json /usr/src/app/package.json
+COPY ./Service.yml /usr/src/app/Service.yml
 
 RUN npm install --production
 
