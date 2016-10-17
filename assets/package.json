@@ -1,4 +1,7 @@
 {
+  "scripts": {
+    "start": "node_modules/.bin/rpcfw run Service.yml"
+  },
   "dependencies": {
     "rpcfw": "git://github.com/nsnsolutions/rpcfw.git#{{ RPCLIB_VERSION }}"
   },
