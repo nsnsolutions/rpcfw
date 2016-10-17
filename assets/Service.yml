@@ -7,6 +7,9 @@ description: {{ SERVICE_DESCRIPTION }}
 main: src/main.js
 
 configurations:
+  - name: fixed
+    value:
+        defaultName: World
 
   # You can specify etcd nodes here. The key must exist or the service will fail
   # to start. You can optionally tell the service to raise a onConfigChanged
@@ -22,7 +25,7 @@ configurations:
   # 
   # STATIC Example:
   # - name: fixed
-  #   Value:
+  #   value:
   #       foo: bar
   #       baz: qux
 

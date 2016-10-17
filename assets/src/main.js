@@ -1,102 +1,70 @@
 'use strict';
 
+const services = require('./services');
+
 module.exports = function {{ SERVICE_NAME.replace(r/\./g, "_") }}(App) {
 
     var app = App({
-        onConfigUpdate: function(name, conf) {
 
-            /*
-             * Called when an etcd configuration changes.
-             * This only applies if a watch is set in your config.
-             * 
-             * args:
-             * - name: name of the config that changed.
-             * - config: the config as a verifiableObject.
-             *
-             * Context:
-             * - bound to appContext.
-             */
+        /*
+         * Called when etcd configuration changes.
+         *
+         * args:
+         *  name: name of the changed config.
+         *  config: the config object
+         */
 
-            console.log(`Configuration changed: ${name}`);
+        onConfigUpdate: () => app.restart(),
 
-            // Restart the sevice.
-            //this.restart();
-        },
-        onStart: function(bus, confs) {
+        /*
+         * Called when the services is started
+         *
+         * args:
+         *  bus: The seneca object.
+         *  config: the service configuration defined in the yaml.
+         */
 
-            /*
-             * Called only once when the service is first started. This method
-             * must be provided.
-             *
-             * args:
-             * - bus: The senecajs object. Install your plugins here.
-             * - configs: A map containing the configs specified in your
-             *   service description file.
-             *
-             * context:
-             * - Bound to appContext.
-             */
+        onStart: bootstrap,
 
-            console.log(`STARTUP - Please open ${__filename} and create your service`);
-            installPlugins(bus, confs);
-        },
-        onRestart: function(bus, confs) {
+        /*
+         * Called when the services is restarted
+         *
+         * args:
+         *  bus: The seneca object.
+         *  config: the service configuration defined in the yaml.
+         */
 
-            /*
-             * Called each time the service is restarted. This method must be
-             * provided.
-             *
-             * args:
-             * - bus: The senecajs object. Install your plugins here.
-             * - configs: A map containing the configs specified in your
-             *   service description file.
-             *
-             * context:
-             * - Bound to appContext.
-             */
+        onRestart: bootstrap,
 
-            console.log(`RESTART - Please open ${__filename} and create your service`);
-            installPlugins(bus, confs);
-        },
-        onShutdown: function(bus, confs) {
+        /*
+         * Called when the services is Shutdown.
+         * Note this does not close the process. That is up you.
+         *
+         * args:
+         *  bus: The seneca object.
+         *  config: the service configuration defined in the yaml.
+         */
 
-            /*
-             * Called each time the service is shutdown. This method is
-             * optional but it is the only way to programaticly exit the
-             * process.
-             *
-             * args:
-             * - bus: The senecajs object. Install your plugins here.
-             * - configs: A map containing the configs specified in your
-             *   service description file.
-             *
-             * context:
-             * - Bound to appContext.
-             */
-
-            console.log(`SHUTDOWN - Please open ${__filename} and create your service`);
-            process.exit(0);
-        }
+        onShutdown:() => process.exit(0)
     });
 
     // Start the service
     app.start();
 
-    // Shutdown the service.
-    //app.shutdown();
+    // ------------------------------------------------------------------------
 
-    function installPlugins(bus, confs) {
+    function bootstrap(bus, conf) {
 
         /*
-         * You can connect as both a client and a server.
-         * See SenecaJS documentation for more information.
+         * Rpcfw documentation:
+         * https://github.com/nsnsolutions/rpcfw/blob/master/README.md
+         *
+         * Seneca documentation:
          * http://senecajs.org/
          */
 
-        /*
-
         // Install plugins here
-        bus.use("src/{{ SERVICE_NAME.replace(r/\./g, '-') }}", confs);
+        bus.use(services.HelloPlugin, conf);
 
         // Start Client - If you want to call other services.
         bus.rpcClient({ pin: "role:*" });
@@ -107,6 +75,9 @@ module.exports = function {{ SERVICE_NAME.replace(r/\./g, "_") }}(App) {
           "role:{{ SERVICE_NAME.replace(r/\./g, '-') }}.Pub"
         ]});
 
-        */
+        bus.ready(() => {
+            if (App.isInDebugMode)
+                console.log("Visit http://localhost:10101/act?role=hello.Pub&cmd=greet.v1");
+        });
     }
 }
