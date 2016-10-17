@@ -110,12 +110,103 @@ function getOpts() {
         }
     );
 
+    // INIT
+
+    var initAp = subap.addParser('init', { 
+        addHelp: true,
+        description: "Initialize a new project with templates."
+    });
+
+    initAp.addArgument(
+        [ "--clobber" ],
+        {
+            help: "Allow clobbering of existing files in the working directory.",
+            action: "storeTrue",
+            defaultValue: false
+        }
+    );
+
+    initAp.addArgument(
+        [ "working-dir" ],
+        {
+            help: "The path to create the new project in.",
+            defaultValue: "./"
+        }
+    );
+    
+    // build
+
+    var buildAp = subap.addParser('build', { 
+        addHelp: true,
+        description: "Build and optionally push the container using the provided configuration file."
+    });
+
+    buildAp.addArgument(
+        [ "--push" ],
+        {
+            help: "Push the image to ECR after build.",
+            action: "storeTrue",
+            defaultValue: false
+        }
+    );
+
+    buildAp.addArgument(
+        [ "--working-dir" ],
+        {
+            help: "Path to the directory containing the dockerfile.",
+            defaultValue: "./"
+        }
+    );
+
+    buildAp.addArgument(
+        [ '--encoding' ],
+        {
+            help: "Specify the character encoding of the service configuration file.",
+            choices: [
+                "ascii", "ucs2", "ucs-2", "utf16le",
+                "utf-16le", "utf8", "utf-8"
+            ],
+            defaultValue: undefined
+        }
+    );
+
+    buildAp.addArgument(
+        [ '--fmt' ],
+        {
+            help: "Specify the format of the service configuration file.",
+            choices: [ "json", "yaml", "yml" ],
+            defaultValue: undefined
+        }
+    );
+
+    buildAp.addArgument(
+        [ "--docker-file" ],
+        {
+            help: "Name of the docker file relative to --working-dir",
+            defaultValue: "Dockerfile"
+        }
+    );
+
+    buildAp.addArgument(
+        [ "--aws-region" ],
+        {
+            help: "Set the aws region if other then us-west-2.",
+            defaultValue: "us-west-2"
+        }
+    );
+
+    buildAp.addArgument(
+        [ "config" ],
+        {
+            help: "Path to the service configuration file.",
+        }
+    );
+
     return ap.parseArgs();
 }
 
 (function main() {
     var opts = getOpts();
-    console.log(opts);
 
     try {
         switch(opts.action) {
@@ -123,16 +214,18 @@ function getOpts() {
                 require('./_subRun')(opts);
                 break;
             case 'build':
+                require('./_subBuild')(opts);
+                break;
             case 'init':
-                console.warn("Not Implemented");
+                require('./_subInit')(opts);
                 break;
             default:
                 console.error("Unknown action. I give up.");
                 break;
         }
     } catch (err) {
-        console.error("ERROR: " + err.message);
-        process.exit(1);
+      console.error("ERROR: " + err.message);
+      process.exit(1);
     }
 
 })();
