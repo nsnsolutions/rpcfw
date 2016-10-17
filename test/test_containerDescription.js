@@ -65,12 +65,12 @@ describe('containerDescription', function() {
             assert(v.isValid());
         });
 
-        it('should be valid with image only.', function() {
+        it('should be invalid with image only.', function() {
             var v = lib.containerDescription({
                 image: "xyz789"
             });
     
-            assert(v.isValid());
+            assert(!v.isValid());
         });
 
         it('should be invalid with out registry or image.', function() {

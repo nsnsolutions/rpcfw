@@ -102,7 +102,7 @@ describe('serviceConfiguration', function() {
             assert(!v.isValid());
         });
 
-        it('should not be valid with out main', function() {
+        it('should be valid with out main', function() {
             var v = lib.serviceConfiguration({
                 name: "MyService",
                 version: "1.2.3",
@@ -116,7 +116,7 @@ describe('serviceConfiguration', function() {
                     image: "xyz789"
                 }
             });
-            assert(!v.isValid());
+            assert(v.isValid());
         });
     });
 
