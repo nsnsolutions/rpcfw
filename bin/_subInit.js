@@ -43,15 +43,15 @@ const prompt_schema = {
 
 module.exports = function Init(opts) {
     var template_dir = path.join( __dirname, "..", "assets"),
-        working_dir = path.normalize(process.cwd(), opts.working_dir),
+        target_dir = path.normalize(path.join(process.cwd(), opts.dir)),
         templateLoader = null,
         templateEngine = null,
         outputs = [
-            { name: "Dockerfile",   target: path.join(working_dir, "Dockerfile")     },
-            { name: "README.md",    target: path.join(working_dir, "README.md")      },
-            { name: "Service.yml",  target: path.join(working_dir, "Service.yml")    },
-            { name: "src/main.js",  target: path.join(working_dir, 'src', "main.js") },
-            { name: "package.json", target: path.join(working_dir, "package.json")   }
+            { name: "Dockerfile",   target: path.join(target_dir, "Dockerfile")     },
+            { name: "README.md",    target: path.join(target_dir, "README.md")      },
+            { name: "Service.yml",  target: path.join(target_dir, "Service.yml")    },
+            { name: "src/main.js",  target: path.join(target_dir, 'src', "main.js") },
+            { name: "package.json", target: path.join(target_dir, "package.json")   }
         ];
 
 

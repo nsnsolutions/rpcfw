@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = function {{ SERVICE_NAME }}(App) {
+module.exports = function {{ SERVICE_NAME.replace(r/\./g, "_") }}(App) {
 
     var app = App({
         onConfigUpdate: function(name, conf) {
@@ -96,15 +96,15 @@ module.exports = function {{ SERVICE_NAME }}(App) {
         /*
 
         // Install plugins here
-        bus.use("src/{{ SERVICE_NAME }}", confs);
+        bus.use("src/{{ SERVICE_NAME.replace(r/\./g, '-') }}", confs);
 
         // Start Client - If you want to call other services.
         bus.rpcClient({ pin: "role:*" });
 
         // Start Server - If you want to expose services.
         bus.rpcServer({ pin: [
-          "role:{{ SERVICE_NAME }}",
-          "role:{{ SERVICE_NAME }}.Pub"
+          "role:{{ SERVICE_NAME.replace(r/\./g, '-') }}",
+          "role:{{ SERVICE_NAME.replace(r/\./g, '-') }}.Pub"
         ]});
 
         */

@@ -16,12 +16,12 @@ configurations:
   # etcd key.
   #
   # ETCD Example:
-  # - name: {{ SERVICE_NAME }}
-  #   key: /config/services/{{ SERVICE_NAME }}
+  # - name: service
+  #   key: /config/services/{{ SERVICE_NAME.replace(r/\./g, "_") }}
   #   watch: true
   # 
   # STATIC Example:
-  # - name: LocalConfig
+  # - name: fixed
   #   Value:
   #       foo: bar
   #       baz: qux
