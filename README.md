@@ -70,7 +70,42 @@ module.exports = function(AppContext) {
         bus.rpcServer({ pin: "role:MyService" });
     }
 };
+
 ```
+
+## Seneca Decorators
+
+RpcFW Addes decorators to the seneca object that is passed to the app on
+startup and restartup. These decorators can be called at any time, even within
+your seneca plugins.
+
+### rpcAdd
+
+`bus.rpcAdd(PATTERN, CALLBACK)`
+
+Expose CALLBACK as rpc function as PATTERN. See [seneca
+add](http://senecajs.org/api/#add-pattern-spec-handler-this) documentation for
+more detail on pattern.
+
+CALLBACK should be a function that excepts 2 arguments.
+
+`function CALLBACK(MSG, RESP) { ... }`
+
+Params:
+- MSG: The request from seneca wrapped as a verifiabeObject.
+- RESP: A rpcDone object used to respond to the request.
+
+### rpcClient
+
+`bus.rpcClient({pin: 'role:*'});`
+
+Connect to the rpc bus as a client.
+
+### rpcServer
+
+`bus.rpcServer({pin: 'role:YourService'});`
+
+Connect to the rpc bus as a server.
 
 ## Service.yml
 
@@ -520,37 +555,3 @@ __shutdown__
 Shutdown the existing connection to the rpc bus and dispose the framework
 configuration. Once complete, calls onShutdown. It is the responsability of the
 solution to exit the process.
-
-## Seneca Decorators
-
-RpcFW Addes decorators to the seneca object that is passed to the app on
-startup and restartup.  These decorators can be called at any time, even within
-your seneca plugins.
-
-### rpcAdd
-
-`bus.rpcAdd(PATTERN, CALLBACK)`
-
-Expose CALLBACK as a rpc function as PATTERN. See [seneca
-add](http://senecajs.org/api/#add-pattern-spec-handler-this) documentation for
-more detail on pattern.
-
-CALLBACK should be a function that excepts 2 arguments.
-
-`function CALLBACK(MSG, RESP) { ... }`
-
-Params:
-- MSG: The request from seneca wrapped as a verifiabeObject.
-- RESP: A rpcDone object used to respond to the request.
-
-### rpcClient
-
-`bus.rpcClient({pin: 'role:*'});`
-
-Connect to the rpc bus as a client.
-
-### rpcServer
-
-`bus.rpcServer({pin: 'role:YourService'});`
-
-Connect to the rpc bus as a server.
