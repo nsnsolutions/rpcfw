@@ -202,6 +202,72 @@ function getOpts() {
         }
     );
 
+    // ETCD-EXPORT
+
+    var etcdExportAp = subap.addParser('etcd-export', {
+        addHelp: true,
+        description: "Extract the etcd configs used by a service."
+    });
+
+    etcdExportAp.addArgument(
+        [ "--discovery-uri" ],
+        {
+            help: "The uri used to connect to etcd. Default: Value stored in env SERVICE_DISCOVERY_URI",
+            defaultValue: process.env.SERVICE_DISCOVERY_URI
+        }
+    );
+
+    etcdExportAp.addArgument(
+        [ "--only" ],
+        {
+            help: "Optionaly limit to a set of configuration names.",
+            type: String,
+            nargs: "+",
+            defaultValue: undefined
+        }
+
+    );
+
+    etcdExportAp.addArgument(
+        [ "config" ],
+        {
+            help: "Path to the service configuration file."
+        }
+    );
+
+    // ETCD-IMPORT
+
+    var etcdImportAp = subap.addParser('etcd-import', {
+        addHelp: true,
+        description: "Import the given json into etcd."
+    });
+
+    etcdImportAp.addArgument(
+        [ "--discovery-uri" ],
+        {
+            help: "The uri used to connect to etcd. Default: Value stored in env SERVICE_DISCOVERY_URI",
+            defaultValue: process.env.SERVICE_DISCOVERY_URI
+        }
+    );
+
+    etcdImportAp.addArgument(
+        [ "--only" ],
+        {
+            help: "Optionaly limit to a set of configuration names.",
+            type: String,
+            nargs: "+",
+            defaultValue: undefined
+        }
+
+    );
+
+    etcdImportAp.addArgument(
+        [ "json" ],
+        {
+            help: "Path to the exported etcd json data that will be imported."
+        }
+    );
+
     return ap.parseArgs();
 }
 
@@ -218,6 +284,12 @@ function getOpts() {
                 break;
             case 'init':
                 require('./_subInit')(opts);
+                break;
+            case 'etcd-export':
+                require('./_subEtcdExport')(opts);
+                break;
+            case 'etcd-import':
+                require('./_subEtcdImport')(opts);
                 break;
             default:
                 console.error("Unknown action. I give up.");
