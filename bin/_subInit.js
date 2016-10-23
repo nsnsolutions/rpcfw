@@ -25,18 +25,6 @@ const prompt_schema = {
             message: "RPCLib Version should look something like v0.0.0",
             default: "v" + packageJson.version,
             required: true
-        },
-        DOCKER_REGISTRY: {
-            description: "Docker Repository",
-            pattern: /^[a-zA-Z0-9\.\_\-]+$/,
-            message: "This must be a valid hostname.",
-            required: false
-        },
-        DOCKER_IMAGE: {
-            description: "Docker Iamge Name",
-            pattern: /^[a-z0-9\.\_]+$/,
-            message: "Can only contain lowercase characters, numbers, dots, and underscores.",
-            require: false
         }
     }
 }
@@ -48,13 +36,12 @@ module.exports = function Init(opts) {
         templateEngine = null,
         outputs = [
             // Metadata
-            { name: "Dockerfile",   target: path.join(target_dir, "Dockerfile")     },
             { name: "README.md",    target: path.join(target_dir, "README.md")      },
             { name: "Service.yml",  target: path.join(target_dir, "Service.yml")    },
             { name: "package.json", target: path.join(target_dir, "package.json")   },
 
             // Source code
-            { name: "src/main.js",            target: path.join(target_dir, 'src', "main.js") },
+            { name: "src/index.js",            target: path.join(target_dir, 'src', "index.js") },
             { name: "src/services/index.js",  target: path.join(target_dir, 'src', 'services', "index.js") },
             { name: "src/services/hello.js",  target: path.join(target_dir, 'src', 'services', "hello.js") },
         ];

@@ -4,7 +4,7 @@ name: {{ SERVICE_NAME }}
 version: 1.0.0
 description: {{ SERVICE_DESCRIPTION }}
 
-main: src/main.js
+main: src/index.js
 
 configurations:
   - name: fixed
@@ -28,7 +28,3 @@ configurations:
   #   value:
   #       foo: bar
   #       baz: qux
-
-container:
-  registry: {{ DOCKER_REGISTRY }}
-  image: {{ DOCKER_IMAGE }}
