@@ -1,7 +1,11 @@
 'use strict';
 
-const tryRequire = require('./_tryRequire');
 const packageJson = require('../package.json');
+
+var libVersion = packageJson.version.split('.');
+libVersion.pop();
+
+const tryRequire = require('./_tryRequire');
 const path = require('path');
 const fs = require('fs');
 const cmdPrompt = tryRequire('prompt');
@@ -21,9 +25,9 @@ const prompt_schema = {
         },
         RPCLIB_VERSION: {
             description: "RPCLib Version",
-            pattern: /^v[0-9]+\.[0-9]+\.[0-9]$/,
-            message: "RPCLib Version should look something like v0.0.0",
-            default: "v" + packageJson.version,
+            pattern: /^v[0-9]+\.[0-9]$/,
+            message: "RPCLib Version should look something like v0.0",
+            default: "v" + libVersion.join('.'),
             required: true
         }
     }
