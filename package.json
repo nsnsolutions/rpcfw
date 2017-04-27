@@ -20,20 +20,21 @@
   },
   "homepage": "https://github.com/en0/rpcfw#readme",
   "dependencies": {
-    "argparse": "^1.0.9",
-    "js-yaml": "^3.6.1",
-    "node-etcd": "^5.0.3",
-    "node-uuid": "^1.4.7",
-    "object-path": "^0.11.2",
-    "seneca": "^3.2.1",
-    "seneca-amqp-transport": "^2.0.0"
+    "amqpuri": "1.0.3",
+    "argparse": "1.0.9",
+    "js-yaml": "3.8.3",
+    "node-etcd": "5.0.3",
+    "node-uuid": "1.4.8",
+    "object-path": "0.11.4",
+    "seneca": "3.3.0",
+    "seneca-amqp-transport": "2.1.0"
   },
   "devDependencies": {
-    "async": "^2.1.2",
-    "aws-sdk": "^2.6.9",
-    "mocha": "^3.1.2",
-    "nunjucks": "^2.5.2",
-    "prompt": "^1.0.0",
-    "temp": "^0.8.3"
+    "async": "2.3.0",
+    "aws-sdk": "2.46.0",
+    "mocha": "3.3.0",
+    "nunjucks": "3.0.0",
+    "prompt": "1.0.0",
+    "temp": "0.8.3"
   }
 }
